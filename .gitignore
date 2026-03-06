@@ -10,6 +10,7 @@ build/
 venv/
 
 .pytest_cache/
+artifacts/
 reports/
 allure-results/
 allure-report/
