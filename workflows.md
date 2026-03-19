@@ -74,6 +74,6 @@ Missing postal code
 
 Refresh page retains cart count
 
-Open new tab/session behavior (optional)
+Open new tab/session behavior
 
 Logout clears session (after logout, opening /inventory should redirect to login)
