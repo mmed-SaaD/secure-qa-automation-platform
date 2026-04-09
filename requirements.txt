@@ -1,0 +1,9 @@
+pytest==8.2.0
+
+httpx==0.28.1
+
+allure-pytest==2.19.2
+
+pytest-xdist==3.8.0
+
+python-dotenv==1.0.1

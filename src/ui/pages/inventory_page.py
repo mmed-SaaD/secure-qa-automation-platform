@@ -9,7 +9,6 @@ class InventoryPage:
         self.page = page
         ############################# Sidebar menu #########################################
         self.burger_menu = page.locator("button#react-burger-menu-btn")
-        self.menu_all_items_option = page.locator('[data-test="inventory-sidebar-link"]')
         self.menu_about_option = page.locator('[data-test="about-sidebar-link"]')
         self.menu_reset_app_option = page.locator('[data-test="reset-sidebar-link"]')
         ############################ App ##################################################
@@ -199,6 +198,12 @@ class InventoryPage:
         self.menu_about_option.click()
         assert self.page.url == "https://saucelabs.com/", \
         f"There is a url missmatch, expecting https://saucelabs.com/ but recieved {self.page.url}"
+    
+    def reset_app_state(self):
+        self.burger_menu.click()
+        self.menu_reset_app_option.click()
+        assert self.get_cart_count() == 0, \
+        f"Cart count is still the same even after resetting the app"
 
     def logout(self):
         self.burger_menu.click()

@@ -3,7 +3,6 @@ from src.ui.pages.login_page import LoginPage
 from src.ui.pages.inventory_page import InventoryPage 
 from core.utils.user import User
 
-'''
 @pytest.mark.ui 
 @pytest.mark.smoke 
 def test_ui_login_and_logout(page, BASE_URL, USERNAME, PASSWORD): 
@@ -39,4 +38,3 @@ def test_ui_locked_out_user_shows_err(page, BASE_URL, LOCKEDUSER, PASSWORD):
     locked_user = User(LOCKEDUSER, PASSWORD)
     login_page.assert_loaded()
     login_page.locked_out_user(locked_user)
-'''

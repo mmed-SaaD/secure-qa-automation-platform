@@ -1,6 +1,7 @@
 import os
 import pytest
 import re
+import requests
 from pathlib import Path
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
@@ -8,6 +9,8 @@ from src.ui.pages.login_page import LoginPage
 from src.ui.pages.inventory_page import InventoryPage
 from src.ui.pages.cart_page import CartPage
 from core.utils.user import User
+from src.api.recipe import Recipe
+
 
 
 ENV_PATH = Path(__file__).resolve().parents[1] / ".env"
@@ -16,6 +19,22 @@ SCREENSHOTS = ARTIFACTS / "screenshots"
 VIDEOS = ARTIFACTS / "videos"
 TRACES = ARTIFACTS / "traces"
 load_dotenv(ENV_PATH)
+
+
+@pytest.fixture(scope="session")
+def api_login_token_verification(API_BASE_URL, USERNAME_API, PASSWORD_API):
+    credentials = {
+        "username" : USERNAME_API,
+        "password" : PASSWORD_API
+    }
+    response =  requests.post(f"{API_BASE_URL}/auth/login" , json = credentials)
+    assert response.status_code == 200, f"Something went wrong, response returned status code {response.status_code}"
+
+    data = response.json()
+    assert "accessToken" in data
+    assert len(data["accessToken"]) > 0
+    
+    return data["accessToken"]
 
 
 @pytest.fixture
@@ -157,3 +176,25 @@ def pytest_runtest_makereport(item,call):
     rep = outcome.get_result()
     #building a dynamic name : rep_call, rep_setup, rep_teardown
     setattr(item, "rep_" + rep.when, rep)
+
+
+@pytest.fixture(scope="session")
+def API_BASE_URL():
+    api_base_url = os.getenv("API_BASE_URL")
+    if not api_base_url:
+        raise ValueError("No API_BASE_URL was found in .env")
+    return api_base_url
+
+@pytest.fixture(scope="session")
+def USERNAME_API():
+    username = os.getenv("USERNAME_API")
+    if not username:
+        raise ValueError("No USERNAME_API found in .env")
+    return username
+
+@pytest.fixture(scope="session")
+def PASSWORD_API():
+    password = os.getenv("PASSWORD_API")
+    if not password:
+        raise ValueError("No PASSWORD_API found in .env")
+    return password

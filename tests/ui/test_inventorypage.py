@@ -1,7 +1,6 @@
 import pytest
 from src.ui.pages.login_page import LoginPage 
 
-'''
 @pytest.mark.ui 
 @pytest.mark.smoke 
 def test_ui_login_items_checked(login_to_inventory_page):
@@ -44,8 +43,7 @@ def test_ui_bypass_loginpage_to_inventorypage(BASE_URL, login_to_inventory_page,
     login_to_inventory_page.logout()
     login_page = LoginPage(page, BASE_URL)
     login_page.directly_open_inventory_page()
-'''
-'''
+
 @pytest.mark.ui
 @pytest.mark.smoke
 def test_ui_new_tab(login_to_inventory_page, context, page, BASE_URL):
@@ -65,4 +63,3 @@ def test_ui_new_session(login_to_inventory_page,browser, BASE_URL):
     login_page.assert_loaded()
 
     new_context.close()
-'''

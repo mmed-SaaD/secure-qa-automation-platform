@@ -3,7 +3,6 @@ from src.ui.pages.checkout_step_one_page import CheckoutStepOnePage
 from src.ui.pages.checkout_step_two_page import CheckoutStepTwoPage
 from src.ui.pages.checkout_completed_page import CheckoutCompletedPage
 
-'''
 @pytest.mark.ui
 def test_ui_login_checkout_empty_form(login_to_inventory_page, cart_page_with_items, page, proceed_to_checkout):
     checkout_step_one_page = CheckoutStepOnePage(page)
@@ -37,4 +36,3 @@ def test_ui_login_add_items_to_cart_checkout(login_to_inventory_page, page, FIRS
     checkout_completed_page = CheckoutCompletedPage(page)
     checkout_completed_page.assert_checkout_completed()
     checkout_completed_page.back_to_home()
-'''
