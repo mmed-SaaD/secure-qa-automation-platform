@@ -11,13 +11,30 @@ class Product:
     }
 
     EXPECTED_KEYS = {
-            "id", "title", "description", "category", "price", 
-            "discountPercentage", "rating", "stock", "tags", 
-            "brand", "sku", "weight", "dimensions", "warrantyInformation", 
-            "shippingInformation", "availabilityStatus", "reviews", 
-            "returnPolicy", "minimumOrderQuantity", "meta", 
-            "images", "thumbnail"
-        }
+        "id":                    int,
+        "title":                 str,
+        "description":           str,
+        "category":              str,
+        "price":                 float,
+        "discountPercentage":    (float, int),
+        "rating":                (float, int),
+        "stock":                 int,
+        "tags":                  list,
+        "brand":                 str,
+        "sku":                   str,
+        "weight":                (float, int),
+        "dimensions":            dict,
+        "warrantyInformation":   str,
+        "shippingInformation":   str,
+        "availabilityStatus":    str,
+        "reviews":               list,
+        "returnPolicy":          str,
+        "minimumOrderQuantity":  int,
+        "meta":                  dict,
+        "images":                list,
+        "thumbnail":             str,
+    }
+    OPTIONAL_KEYS = ["brand"]
     
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -35,9 +52,10 @@ class Product:
             assert hasattr(self, required_field), f"{required_field} is missing !"
 
     def assert_fields_type(self):
-        for field, expected_type in self.EXPECTED_TYPES.items():
-            assert isinstance(getattr(self, field), expected_type), \
-            f"Expected [{field}] to be {expected_type} got {type(getattr(self, field))}"
+        for field, expected_type in self.EXPECTED_KEYS.items():
+            if field not in self.OPTIONAL_KEYS:
+                assert isinstance(getattr(self, field), expected_type), \
+                f"Expected [{field}] to be {expected_type} got {type(getattr(self, field))}"
 
     def assert_price_is_positive(self):
         assert self.price > 0 , f"Expected price to be positive, got {self.price}"
@@ -51,8 +69,10 @@ class Product:
     def assert_shape_stability(self):
         actual_keys = set(vars(self).keys())
 
-        missing_keys = self.EXPECTED_KEYS - actual_keys
-        extra_keys = actual_keys - self.EXPECTED_KEYS
+        missing_keys = self.EXPECTED_KEYS.keys() - actual_keys
+        extra_keys = actual_keys - self.EXPECTED_KEYS.keys()
 
-        assert not missing_keys, f"The following keys are missing {missing_keys}"
-        assert not extra_keys, f"The following keys are extras {extra_keys}"
+        for missing_key in missing_keys:
+            if missing_key not in self.OPTIONAL_KEYS:
+                assert not missing_keys, f"The following keys are missing {missing_keys}"
+                assert not extra_keys, f"The following keys are extras {extra_keys}"

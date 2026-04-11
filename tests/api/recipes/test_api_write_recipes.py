@@ -3,7 +3,7 @@ from src.api.recipe import Recipe
 
 @pytest.mark.api
 @pytest.mark.smoke
-def test_api_add_recipe(API_BASE_URL, created_recipe_id):
+def test_api_add_recipe(API_BASE_URL):
     headers = {
         'Content-Type' : 'Application/json'
     }
@@ -49,8 +49,7 @@ def test_api_add_recipe_missing_fields(API_BASE_URL):
 
 @pytest.mark.api
 @pytest.mark.smoke
-def test_api_update_recipe(API_BASE_URL, created_recipe_id):
-    print(f"This is the id of the reciped created : {created_recipe_id}")
+def test_api_update_recipe(API_BASE_URL):
     payload = {
         "name" : "Moroccan 7arira with tomatoes"
     }

@@ -2,22 +2,22 @@ from pydantic import HttpUrl
 import requests
 
 REQUIRED_FIELDS = {
-        "name",
-        "ingredients",
-        "instructions",
-        "prepTimeMinutes",
-        "cookTimeMinutes",
-        "servings",
-        "difficulty",
-        "cuisine",
-        "caloriesPerServing",
-        "tags",
-        "userId",
-        "image",
-        "rating",
-        "reviewCount",
-        "mealType",
-    }
+    "name":               str,
+    "ingredients":        list,
+    "instructions":       list,
+    "prepTimeMinutes":    int,
+    "cookTimeMinutes":    int,
+    "servings":           int,
+    "difficulty":         str,
+    "cuisine":            str,
+    "caloriesPerServing": int,
+    "tags":               list,
+    "userId":             int,
+    "image":              str,
+    "rating":             (float, int),
+    "reviewCount":        int,
+    "mealType":           list,
+}
 
 class Recipe:    
 
@@ -29,8 +29,27 @@ class Recipe:
     def from_dict(data: dict):
         return Recipe(**data)
 
+    def assert_fields_type_is_correct(self):
+        for field, expected_type in REQUIRED_FIELDS.items():
+            actual = getattr(self, field)
+            assert isinstance(actual, expected_type), \
+                f"Expected '{field}' to be {expected_type.__name__}, got {type(actual).__name__}"
+
+    def assert_non_nullability(self):
+        for field in REQUIRED_FIELDS.keys():
+            assert getattr(self, field) is not None, f"{field} must not be None"
+
+    def assert_string_not_empty(self):
+        for field in REQUIRED_FIELDS.keys():
+            if isinstance(field, str):
+                assert getattr(self, field) != "" , f"{field} must not be empty !"
+            assert len(getattr(self,"ingredients")) > 0,  "ingredients list must not be empty"
+            assert len(getattr(self,"instructions")) > 0, "instructions list must not be empty"
+            assert len(getattr(self,"tags")) > 0,         "tags list must not be empty"
+            assert len(getattr(self, "mealType")) > 0,     "mealType list must not be empty"
+
     def assert_required_fields_exist(self):
-        for field in REQUIRED_FIELDS:
+        for field in REQUIRED_FIELDS.keys():
             assert hasattr(self, field) , f"Missing attribute {field}"
 
     def assert_submitted_data_compatibility(self, data: dict):

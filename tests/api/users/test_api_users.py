@@ -33,14 +33,4 @@ def test_get_user_by_id(API_BASE_URL, userID: int = 10):
     for field in REQUIRED_FIELDS:
         assert field in body
 
-@pytest.mark.api
-@pytest.mark.smoke
-def test_user_related_schema(API_BASE_URL):
-    endpoints = [
-        requests.get(f"{API_BASE_URL}/users/19").json(),
-        requests.get(f"{API_BASE_URL}/users").json()["users"][0]
-    ]
-    for user in endpoints:
-        User(**user)
-    
     

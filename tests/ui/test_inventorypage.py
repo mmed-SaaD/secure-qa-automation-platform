@@ -1,5 +1,6 @@
 import pytest
 from src.ui.pages.login_page import LoginPage 
+from src.ui.pages.cart_page import CartPage
 
 @pytest.mark.ui 
 @pytest.mark.smoke 

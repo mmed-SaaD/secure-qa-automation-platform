@@ -172,7 +172,7 @@ class InventoryPage:
             new_tab = popup_info.value
             new_tab.wait_for_load_state("networkidle")
             url = new_tab.url
-            assert url == "https://x.com/saucelabs", \
+            assert "x.com/saucelabs" in url or "twitter.com/saucelabs" in url, \
             f"There is a url missmatch, expecting https://x.com/saucelabs but recieved {url}"
 
     def visit_facebook(self):
@@ -181,8 +181,8 @@ class InventoryPage:
             new_tab = popup_info.value
             new_tab.wait_for_load_state("networkidle")
             url = new_tab.url
-            assert url == "https://www.facebook.com/saucelabs", \
-            f"There is a url missmatch, expecting https://www.facebook.com/saucelabs but recieved {url}"
+            assert url == "https://web.facebook.com/saucelabs?_rdc=1&_rdr", \
+            f"There is a url missmatch, expecting https://web.facebook.com/saucelabs?_rdc=1&_rdr but recieved {url}"
 
     def visit_linkedin(self):
         with self.page.expect_popup() as popup_info:

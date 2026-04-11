@@ -1,10 +1,10 @@
 import requests, pytest
 from src.api.product import Product
-'''
+
 @pytest.mark.api
 @pytest.mark.smoke
 def test_api_product_details(API_BASE_URL):
-    id = input("Enter product ID to fetch : ")
+    id = 14
     response = requests.get(f"{API_BASE_URL}/products/{id}")
     assert response.status_code == 200
     body = response.json()
@@ -23,4 +23,3 @@ def test_api_product_details(API_BASE_URL):
     product.assert_category_is_not_empty()
     
     product.assert_shape_stability()
-'''

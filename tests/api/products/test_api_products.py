@@ -1,5 +1,5 @@
 import requests, pytest
-'''
+
 @pytest.mark.api
 @pytest.mark.smoke
 def test_api_products_collection(API_BASE_URL):
@@ -39,4 +39,3 @@ def test_api_products_collection(API_BASE_URL):
     assert body["skip"] == 0
     assert body["skip"] + body["limit"] <= body["total"]
 
-'''

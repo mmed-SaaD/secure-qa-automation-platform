@@ -1,5 +1,5 @@
 import requests, pytest
-'''
+
 @pytest.mark.smoke
 @pytest.mark.api
 def test_api_is_reachable(API_BASE_URL):
@@ -45,4 +45,3 @@ def test_api_endpoint_body_form(API_BASE_URL, endpoint, key_word):
     assert key_word in body
     assert isinstance(body[key_word], list)
     assert len(body[key_word]) > 0
-'''

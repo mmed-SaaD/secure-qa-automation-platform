@@ -128,7 +128,7 @@ def inventory_page(page):
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=750)
+        browser = p.chromium.launch(headless=True)
         yield browser
         browser.close()
 

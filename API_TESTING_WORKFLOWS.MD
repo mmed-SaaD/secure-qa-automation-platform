@@ -206,7 +206,7 @@ Validate each step’s output feeds the next step correctly
 
 Validate full lifecycle remains stable under automation
 
-# 13 - Negative Testing workflow
+# 13 - Negative Testing workflow => Checked
 
 Send bad input or bad conditions → validate safe and correct failure behavior
 
@@ -228,7 +228,7 @@ Malformed token handling
 
 Unexpected query param values handling
 
-# 14 - Response Validation workflow
+# 14 - Response Validation workflow => Checked
 
 Inspect response deeply → validate status, headers, schema, and business data
 
@@ -240,13 +240,9 @@ Validate required headers if applicable
 
 Validate JSON body is parseable
 
-Validate required keys exist
-
 Validate field types are correct
 
 Validate nullability and optional field behavior
-
-Validate numeric values are in acceptable range
 
 Validate strings are non-empty where required
 
@@ -258,15 +254,7 @@ Verify IDs are positive integers
 
 Verify prices are not negative
 
-Verify totals are coherent with item counts if possible
-
 Verify category values are present and meaningful
-
-Verify fields that should not be blank are not blank
-
-Verify created object data matches request payload
-
-Verify updates do not silently corrupt unrelated fields
 
 # 16 - Error Handling workflow => Checked
 
@@ -282,7 +270,7 @@ Validate API does not leak stack traces or internals in normal client errors
 
 Validate unsupported routes/methods are handled gracefully
 
-# 17 - Contract / Schema Validation workflow
+# 17 - Contract / Schema Validation workflow => Checked
 
 Validate response structure against expected schema to detect breaking changes
 
@@ -296,11 +284,9 @@ Verify cart response schema
 
 Verify error response schema
 
-Verify optional fields behavior does not break contracts
-
 Detect missing, renamed, or type-changed fields
 
-# 18 - Headers / Query Parameters workflow
+# 18 - Headers / Query Parameters workflow => Checked
 
 Send requests with headers and parameters → verify behavior changes correctly
 
@@ -314,26 +300,7 @@ Validate query params for search, filter, sort, skip, limit
 
 Validate unsupported query params do not crash API
 
-
-# 21 - Basic API Security Checks workflow
-
-Validate API against common obvious weaknesses at an automation level
-
-Verify unauthorized protected access is denied
-
-Verify invalid token is denied
-
-Verify sensitive endpoints do not expose data without auth
-
-Verify error messages do not leak implementation details unnecessarily
-
-Verify unexpected methods are rejected safely
-
-Verify basic input tampering does not crash endpoint
-
-Verify ID tampering behavior is controlled where applicable
-
-# 22 - Test Data Management workflow => checked
+# 19 - Test Data Management workflow => checked
 
 Prepare input data → reuse safely → keep tests isolated and readable
 
@@ -347,7 +314,7 @@ Reuse helper payload builders for readability
 
 Clean up created data when target supports true persistence
 
-# 23 - Fixtures / Reusability workflow => checked
+# 20 - Fixtures / Reusability workflow => checked
 
 Centralize setup → reduce duplication → improve maintainability
 
@@ -363,7 +330,7 @@ Shared helper assertions for common API checks
 
 Shared markers for smoke, regression, negative, auth, crud
 
-# 24 - Reporting workflow
+# 21 - Reporting workflow => Checked
 
 Run API suite → collect results → present evidence professionally
 
@@ -377,7 +344,7 @@ Separate smoke and regression API runs
 
 Make report recruiter/client friendly
 
-# 25 - CI/CD-ready workflow
+# 22 - CI/CD-ready workflow
 
 Run suite in a repeatable way suitable for pipeline usage
 

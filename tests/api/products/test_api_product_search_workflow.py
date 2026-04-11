@@ -1,6 +1,6 @@
 import requests, pytest
 from src.api.product import Product
-'''
+
 SEARCH_KEYWORD = "sunglasses"
 NON_EXISTING_KEYWORD = "exir"
 CATEGORY = "smartphones"
@@ -52,4 +52,3 @@ def test_api_product_filtering_by_category(API_BASE_URL):
     assert len(body["products"]) > 0 , f"No products found for category {CATEGORY}"
     for product in body["products"]:
         assert CATEGORY in product["category"].lower()
-'''
