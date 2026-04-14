@@ -2,6 +2,9 @@ import os
 import pytest
 import re
 import requests
+import psycopg2
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from pathlib import Path
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
@@ -10,6 +13,7 @@ from src.ui.pages.inventory_page import InventoryPage
 from src.ui.pages.cart_page import CartPage
 from core.utils.user import User
 from src.api.recipe import Recipe
+from src.db.counting_cursor import CountingCursor
 
 
 
@@ -198,3 +202,91 @@ def PASSWORD_API():
     if not password:
         raise ValueError("No PASSWORD_API found in .env")
     return password
+
+@pytest.fixture(scope="session")
+def db_connection():
+    conn = psycopg2.connect(
+        host = os.getenv("DB_HOST"),
+        port = os.getenv("DB_PORT"),
+        dbname = os.getenv("DB_NAME"),
+        user = os.getenv("DB_USER"),
+        password = os.getenv("DB_PASSWORD")
+    )
+    yield conn
+    conn.close()
+
+@pytest.fixture(scope="session")
+def db_readonly_connection():
+    conn = psycopg2.connect(
+        host = os.getenv("DB_HOST"),
+        port = os.getenv("DB_PORT"),
+        dbname = os.getenv("DB_NAME"),
+        user = os.getenv("DB_RO_USER"),
+        password = os.getenv("DB_RO_PASSWORD")
+    )
+    yield conn
+    conn.close()
+
+@pytest.fixture(scope="session")
+def db_unpriviliged_connection():
+    conn = psycopg2.connect(
+        host = os.getenv("DB_HOST"),
+        port = os.getenv("DB_PORT"),
+        dbname = os.getenv("DB_NAME"),
+        user = os.getenv("DB_UNPRIVILIGED_USER"),
+        password = os.getenv("DB_UNPRIVILIGED_PASSWORD")
+    )
+    yield conn
+    conn.close()
+
+@pytest.fixture(scope="function")
+def db_cursor(db_connection):
+    cursor = db_connection.cursor()
+    yield cursor
+    db_connection.rollback() #Undo any changes performed by the test
+    cursor.close()
+
+@pytest.fixture
+def get_perf_test_table(db_cursor, db_connection):
+    table_name = "users_perf_test"
+    conn = db_connection
+    cur = db_cursor
+    cur.execute(f"DROP TABLE IF EXISTS {table_name};")
+    cur.execute(f"""
+        CREATE TABLE {table_name} (
+            user_id SERIAL PRIMARY KEY,
+            email TEXT NOT NULL,
+            name TEXT
+        );
+    """)
+    values = [
+        (f"user{i}@gmail.com" , f"name_{i}") for i in range (0,10001)
+    ]
+    for value in values:
+        cur.execute(f"INSERT INTO {table_name}(email, name) VALUES(%s, %s)", (value[0], value[1]))
+
+    cur.execute(f"ANALYZE {table_name};")
+
+    yield table_name
+    cur.execute(f"DROP TABLE IF EXISTS {table_name};")
+
+@pytest.fixture
+def create_users_table(db_cursor):
+    ph = PasswordHasher()
+    cur = db_cursor
+    table_name = "security_test_users"
+    cur.execute(f"DROP TABLE IF EXISTS {table_name}")
+    cur.execute(f"""
+        CREATE TABLE {table_name}(
+            user_id SERIAL PRIMARY KEY,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL
+        );
+    """)
+    users = [
+        (f"user{i}__{i}", ph.hash(f"password_{i}")) for i in range (1,901)
+    ]
+    for user in users:
+        cur.execute(f"INSERT INTO {table_name}(username, password) VALUES(%s, %s)", (user[0], user[1]))
+    
+    yield table_name
