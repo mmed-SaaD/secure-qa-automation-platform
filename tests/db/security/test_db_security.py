@@ -4,7 +4,7 @@ from core.utils.db.get_user_sql_protected import get_user_sql_protected
 
 @pytest.mark.db
 @pytest.mark.smoke
-def test_test(db_cursor, create_users_table):
+def test_db_sql_injection(db_cursor, create_users_table):
     table_name = create_users_table
     params = {
         "username" : "' OR 1=1--'",

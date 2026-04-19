@@ -1,11 +1,11 @@
-# 1 — Connection & Setup  => Checked
+# 1 — Connection & Setup
 
 Connect to the database successfully
 Verify connection closes properly
 Verify connection fails with wrong credentials
 Verify connection fails with wrong host/port
 
-# 2 — CRUD Operations => Checked
+# 2 — CRUD Operations
 
 Insert a record and verify it was saved
 Read a record by ID
@@ -13,7 +13,7 @@ Update a record and verify changes persisted
 Delete a record and verify it's gone
 Verify deleted record is not retrievable
 
-# 3 — Data Integrity => Checked
+# 3 — Data Integrity
 
 Verify primary key uniqueness
 Verify foreign key constraints are enforced
@@ -21,7 +21,7 @@ Verify NOT NULL constraints are enforced
 Verify UNIQUE constraints are enforced
 Verify default values are applied correctly
 
-# 4 — Query Validation => Checked
+# 4 — Query Validation
 
 Verify SELECT returns correct data
 Verify WHERE clause filters correctly
@@ -30,20 +30,20 @@ Verify LIMIT and OFFSET work correctly
 Verify JOIN returns correct combined data
 Verify aggregate functions (COUNT, SUM, AVG, MAX, MIN)
 
-# 5 — Schema Validation => Checked
+# 5 — Schema Validation
 
 Verify table exists
 Verify column names are correct
 Verify column types are correct
 Verify indexes exist where expected
 
-# 6 — Transactions => Checked
+# 6 — Transactions
 
 Verify COMMIT persists data
 Verify ROLLBACK undoes changes
 Verify transaction isolation works correctly
 
-# 7 — Performance => Checked
+# 7 — Performance
 
 Verify query executes within acceptable time
 Verify indexes improve query speed
@@ -55,7 +55,7 @@ Verify SQL injection is handled
 Verify user permissions are enforced
 Verify sensitive data is not exposed
 
-# 9 — Boundary & Negative => Checked
+# 9 — Boundary & Negative
 
 Insert record with missing required fields
 Insert record with wrong data types
