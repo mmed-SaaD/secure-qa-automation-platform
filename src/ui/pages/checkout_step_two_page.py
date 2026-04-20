@@ -27,7 +27,7 @@ class CheckoutStepTwoPage:
         checkout_total = float(re.search(r'\d+\.\d+', self.checkout_total_price.inner_text()).group()) 
         tax = float(re.search(r'\d+\.\d+', self.checkout_tax.inner_text()).group()) 
         assert round(sum(items_prices) + tax, 2) == round(checkout_total, 2), \
-        f"Total calculated is : {total} while the total fetched from the checkout is : {checkout_total}"
+        f"Total calculated is : {sum(items_prices) + tax} while the total fetched from the checkout is : {checkout_total}"
 
     def finish_checkout(self):
         self.finish_button.click()

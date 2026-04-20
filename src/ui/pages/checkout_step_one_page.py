@@ -52,6 +52,6 @@ class CheckoutStepOnePage:
     def submit_form_with_required_fields(self, FIRSTNAME: str, LASTNAME: str, ZIP: int):
         self.first_name_field.fill(FIRSTNAME)
         self.last_name_field.fill(LASTNAME)
-        self.zip_field.fill(ZIP)
+        self.zip_field.fill(str(ZIP))
         self.continue_button.click()
         
