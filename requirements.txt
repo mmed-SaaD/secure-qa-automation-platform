@@ -6,6 +6,8 @@ playwright==1.42.0
 
 allure-pytest==2.15.3
 
+pydantic==1.10.14
+
 pytest-xdist==3.8.0
 
 python-dotenv==1.0.1
