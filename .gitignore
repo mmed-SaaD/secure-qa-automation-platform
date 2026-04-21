@@ -11,7 +11,7 @@ venv/
 
 .pytest_cache/
 artifacts/
-reports/
+allure_reports/
 allure-results/
 allure-report/
 
