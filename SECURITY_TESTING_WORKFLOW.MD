@@ -1,116 +1,230 @@
-🔐 Security Testing Workflow — QA Automation Project
-🎯 Objective
+# 🔐 Security Testing Workflow — QA Automation Project
 
-This phase aims to integrate security testing into a QA automation workflow by combining:
+---
 
-Automated Dynamic Application Security Testing (DAST)
-Python-based orchestration
-Targeted manual vulnerability validation
+## 🎯 Objective
 
-The goal is not full penetration testing, but to demonstrate the ability to:
+This phase integrates security testing into a QA automation workflow by combining:
 
-identify vulnerabilities using professional tools
-validate critical findings
-report them in a structured, business-oriented manner
-🧩 System Under Test (SUT)
-Target: OWASP Juice Shop
-Type: Deliberately vulnerable web application
-Purpose: Safe and controlled environment for practicing security testing
-🧰 Tools & Technologies
-OWASP ZAP (DAST scanner)
-Python (automation and reporting)
-Docker (environment setup)
-Browser (manual validation)
+* Automated Dynamic Application Security Testing (DAST)
+* Python-based orchestration
+* Targeted manual vulnerability validation
 
-Optional:
+The objective was not to perform a full penetration test, but to demonstrate the ability to:
 
-Burp Suite Community Edition (manual request manipulation)
-🏗️ Workflow Overview
+* Identify vulnerabilities using automated tools
+* Validate findings manually
+* Analyze real impact
+* Report results in a structured, professional manner
 
-The security phase is divided into three main layers:
+---
 
-Automated Scanning
-Python-Orchestrated Analysis
-Manual Vulnerability Validation
-🟢 Phase 1 — Environment Setup
-Tasks
+## 🧩 System Under Test (SUT)
 
-Install and configure Docker
+* Target: OWASP Juice Shop
+* Type: Deliberately vulnerable web application
+* Purpose: Safe and controlled environment for security testing practice
 
-Run OWASP Juice Shop container
+---
 
-Run OWASP ZAP in daemon (headless) mode
+## 🧰 Tools & Technologies
 
-Verify ZAP API accessibility
+* OWASP ZAP (automated scanning)
+* Python (scan orchestration & result extraction)
+* Docker (environment setup)
+* Browser DevTools (manual testing)
+* Burp Suite Community Edition (request interception & manipulation)
 
-Connect Python client to ZAP API
+---
 
-Deliverables
-Working local environment
-Verified API connectivity (zap.core.version)
-🔵 Phase 2 — Automated Security Scanning
-Tasks
+## 🏗️ Workflow Overview
 
-Trigger target access via ZAP
+The security phase was executed in three main layers:
 
-Perform spider scan (endpoint discovery)
+1. Automated Scanning (ZAP)
+2. Analysis & Filtering (Python + manual review)
+3. Manual Exploitation (targeted validation)
 
-Wait for spider completion
+---
 
-Perform active scan (vulnerability detection)
+# 🟢 Phase 1 — Environment Setup
 
-Monitor scan progress
+### Tasks
 
-Retrieve alerts from ZAP
+* Configured Docker environment
+* Deployed OWASP Juice Shop locally
+* Ran OWASP ZAP in daemon (headless) mode via Docker
+* Verified ZAP API connectivity
+* Connected Python client to ZAP API
 
-Deliverables
-Script: zap_scan.py
-Console output of scan progress
-Raw vulnerability data
-🟣 Phase 3 — Data Processing & Reporting
-Tasks
+### Deliverables
 
-Extract alerts from ZAP API
+* Fully working local security testing environment
+* Verified connection using `zap.core.version`
 
-Structure results (JSON format)
+---
 
-Classify findings by risk level:
+# 🔵 Phase 2 — Automated Security Scanning
 
-High
-Medium
-Low
+### Tasks
 
-Filter out noise / irrelevant alerts
+* Initiated target access via ZAP
+* Performed spider scan to discover endpoints
+* Waited for spider completion
+* Executed active scan for vulnerability detection
+* Monitored scan progress
+* Retrieved alerts via ZAP API
 
-Generate structured report
+### Observations
 
-Deliverables
-zap_report.json
-final_report.md
-🔴 Phase 4 — Manual Vulnerability Validation
-Objective
+* Large volume of alerts generated (mostly low-value)
+* Many findings related to static assets and non-relevant endpoints
 
-Validate high-value vulnerabilities identified during automated scanning.
+### Deliverables
 
-Scope (limited and focused)
+* `zap_scan.py` script
+* Raw alert dataset from ZAP
+* Initial vulnerability list
 
-Select 2–3 vulnerabilities maximum, such as:
+---
 
-Broken Access Control
-Injection (SQL/NoSQL)
-Authentication / Session weaknesses
-Tasks
+# 🟣 Phase 3 — Analysis & Filtering
 
-For each vulnerability:
+### Tasks
 
-Identify endpoint from scan results
+* Parsed alerts returned by ZAP
+* Filtered out noise (static files, duplicate findings)
+* Grouped vulnerabilities into meaningful categories
+* Prioritized findings based on impact
 
-Reproduce the issue manually
+### Key Insight
 
-Capture request and response
+Automated tools produced noisy output, requiring manual analysis to extract actionable vulnerabilities.
 
-Analyze exploitability
+### Final Categories Identified
 
-Evaluate impact
+* Security Misconfiguration
+* Cross-Site Scripting (potential)
+* Injection indicators
 
-Suggest remediation
+### Deliverables
+
+* Cleaned vulnerability set
+* Structured report (`final_report.md`)
+
+---
+
+# 🔴 Phase 4 — Manual Vulnerability Validation
+
+## 🎯 Objective
+
+Validate high-impact vulnerabilities through manual testing and confirm exploitability.
+
+---
+
+## 🔥 1. Cross-Site Scripting (XSS)
+
+### Approach
+
+* Focused on real user input points (search functionality)
+* Ignored static asset endpoints flagged by scanner
+* Tested multiple payload variations
+
+### Result
+
+* Basic payload (`<script>`) was blocked
+* Alternative payload successfully executed:
+
+  ```html
+  <iframe src="javascript:alert(`xss`)">
+  ```
+
+### Outcome
+
+* Reflected XSS confirmed
+* Demonstrated weak input sanitization
+
+---
+
+## 💥 2. Authentication Bypass via Injection
+
+### Approach
+
+* Targeted login functionality
+* Injected payload into username field
+
+### Payload Used
+
+```sql
+' OR '1'='1'--
+```
+
+### Result
+
+* Successfully bypassed authentication
+* Logged in as administrative user
+
+### Impact
+
+* Full account takeover
+* Access to sensitive user data (PII & financial information)
+
+---
+
+## 🔴 3. Broken Access Control (IDOR)
+
+### Approach
+
+* Observed API requests using Burp Suite
+* Identified basket endpoint using numeric identifiers
+* Modified resource identifiers manually
+
+### Example
+
+```http
+GET /rest/basket/6   → original request  
+GET /rest/basket/4   → modified request
+```
+
+### Result
+
+* Accessed another user’s basket data
+* No ownership validation enforced
+
+### Outcome
+
+* Confirmed Horizontal Access Control vulnerability (IDOR)
+
+---
+
+# 🧠 Key Learnings
+
+* Automated scanners generate noisy results and require manual validation
+* Real vulnerabilities are often found through targeted testing, not broad scanning
+* Input-based attacks (Injection, XSS) require creativity and payload variation
+* Access control issues require understanding application logic rather than relying on tools
+
+---
+
+# 🚀 Final Outcome
+
+The workflow successfully identified and validated vulnerabilities across multiple categories:
+
+* 🔴 Critical: Authentication Bypass via Injection
+* 🔴 High: Broken Access Control (IDOR)
+* 🟠 Medium: Reflected XSS
+* 🟡 Low–Medium: Security Misconfiguration
+
+---
+
+## 📌 Conclusion
+
+This workflow demonstrates a practical, real-world approach to integrating security testing into QA processes by combining:
+
+* Automated scanning
+* Manual validation
+* Impact-driven analysis
+
+The result is a structured and realistic security assessment aligned with professional practices.
+
+---

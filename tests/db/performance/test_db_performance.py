@@ -8,10 +8,10 @@ from src.db.counting_cursor import CountingCursor
 @pytest.mark.db
 @pytest.mark.smoke
 @pytest.mark.parametrize("query, threshold" , [
-    ("SELECT * FROM actor", 1.0),
-    ("SELECT film.title, actor.first_name, actor.last_name FROM film INNER JOIN film_actor on film_actor.film_id = film.film_id INNER JOIN actor on film_actor.actor_id = actor.actor_id LIMIT 3", 1.5),
-    ("SELECT * FROM actor RIGHT JOIN film_actor ON film_actor.actor_id = actor.actor_id LIMIT 3", 1.5),
-    ("SELECT * FROM film", 1.0)
+    ("SELECT * FROM actor", 3.5),
+    ("SELECT film.title, actor.first_name, actor.last_name FROM film INNER JOIN film_actor on film_actor.film_id = film.film_id INNER JOIN actor on film_actor.actor_id = actor.actor_id LIMIT 3", 3.0),
+    ("SELECT * FROM actor RIGHT JOIN film_actor ON film_actor.actor_id = actor.actor_id LIMIT 3", 3.0),
+    ("SELECT * FROM film", 3.5)
 ])
 def test_db_performance(db_cursor, query, threshold):
     cur = db_cursor

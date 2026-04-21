@@ -14,4 +14,4 @@ pandas==3.0.2
 
 pytest-html==4.2.0
 
- zaproxy==0.5.0
+zaproxy==0.5.0
