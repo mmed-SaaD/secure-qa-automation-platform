@@ -15,7 +15,8 @@ class CheckoutStepTwoPage:
         expect(self.overview_header).to_be_visible()
 
     def assert_payment_info(self, payment_info: str):
-        assert str(self.payment_info.inner_text()) == str(payment_info)
+        assert str(self.payment_info.inner_text()) == str(payment_info), \
+        f"Expected payment info to be {self.payment_info.inner_text()}, got {str(payment_info)} instead"
 
     def assert_total_price(self):
         items_prices = []
