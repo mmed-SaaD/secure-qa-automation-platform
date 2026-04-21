@@ -2,7 +2,7 @@ pytest==8.2.0
 
 httpx==0.28.1
 
-allure-pytest==2.19.2
+allure-pytest==2.15.3
 
 pytest-xdist==3.8.0
 
