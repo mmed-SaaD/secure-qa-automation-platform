@@ -137,6 +137,15 @@ All tests are integrated with **Allure Reports** for clear visualization.
 
 ![Duration](./reports/images/status.png)
 
+----------------------------------------------------------------------------------------------------
+### 🔹 Stress Test – Progressive Load Increase with Latency Degradation
+![Stress Test - Performance Degradation case : 1](./reports/images/stress-test_case1.png)
+
+---
+
+### 🔹 Stress Test – System Failure Point and Performance Breakdown
+![Stress Test - Performance Degradation case : 2](./reports/images/stress-test_case2.png)
+
 ---
 
 ## 🧠 Key Takeaways

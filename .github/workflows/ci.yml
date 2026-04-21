@@ -1,4 +1,5 @@
 name: QA Automation CI
+
 permissions:
   contents: write
 
@@ -37,7 +38,6 @@ jobs:
 
     environment: secure-qa-automation-platform-env
     env:
-      # UI
       BASE_URL: ${{ secrets.BASE_URL }}
       USERNAME: ${{ secrets.USERNAME }}
       PASSWORD: ${{ secrets.PASSWORD }}
@@ -47,14 +47,11 @@ jobs:
       LASTNAME: ${{ secrets.LASTNAME }}
       ZIP: ${{ secrets.ZIP }}
       PAYMENT_INFO: ${{ secrets.PAYMENT_INFO }}
-
-      # API
       API_BASE_URL: ${{ secrets.API_BASE_URL }}
       USERNAME_API: ${{ secrets.USERNAME_API }}
       PASSWORD_API: ${{ secrets.PASSWORD_API }}
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -62,6 +59,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install dependencies
         run: |
@@ -71,35 +73,36 @@ jobs:
       - name: Install Playwright browsers
         run: playwright install --with-deps
 
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline --save-dev
+
       - name: Run scheduled smoke tests
         if: github.event_name == 'schedule'
-        run: pytest -m smoke -v
+        run: pytest -m smoke -v --alluredir=allure-results
 
       - name: Run manual selected suite
         if: github.event_name == 'workflow_dispatch'
         run: |
           if [ "${{ github.event.inputs.suite }}" = "smoke" ]; then
-            pytest -m smoke -v
+            pytest -m smoke -v --alluredir=allure-results
           elif [ "${{ github.event.inputs.suite }}" = "api" ]; then
-            pytest tests/api -v
+            pytest tests/api -v --alluredir=allure-results
           elif [ "${{ github.event.inputs.suite }}" = "ui" ]; then
-            pytest tests/ui -v
+            pytest tests/ui -v --alluredir=allure-results
           else
-            pytest -v
+            pytest -v --alluredir=allure-results
           fi
 
       - name: Run CI suite for push and pull request
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        run: pytest -m "not db" -v
-
-      - name: Run tests with Allure results
-        run: pytest --alluredir=allure-results
+        run: pytest -m "not db" -v --alluredir=allure-results
 
       - name: Generate Allure report
+        if: always()
         run: allure generate allure-results --clean -o allure-report
 
       - name: Deploy Allure Report to GitHub Pages
-        if: github.ref == 'refs/heads/main'
+        if: always() && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
