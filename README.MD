@@ -179,12 +179,77 @@ This project demonstrates the ability to:
 
 ---
 
-## 📎 Future Improvements
+## 🚀 CI/CD Pipeline Integration
 
-* CI/CD integration (GitHub Actions)
-* Allure trend history
-* Extended security coverage
-* Advanced performance scenarios
+A complete **CI/CD pipeline** has been implemented using **GitHub Actions** to automate test execution and reporting across multiple testing layers.
+
+### 🔄 Pipeline Triggers
+The workflow is automatically executed on:
+- **Push to `main` branch**
+- **Pull requests targeting `main`**
+- **Scheduled daily runs** (cron job)
+- **Manual execution** with selectable test suites (smoke, API, UI)
+
+---
+
+### 🧪 Automated Test Execution
+
+The pipeline dynamically runs different test suites based on the trigger:
+
+- **Scheduled runs**
+  - Execute **smoke tests** to validate core functionality
+
+- **Pull Requests / Push**
+  - Execute **CI test suite** (excluding DB tests)
+  - Ensures fast feedback for code changes
+
+- **Manual runs**
+  - Allows selection of:
+    - `smoke`
+    - `api`
+    - `ui`
+    - or full test suite
+
+---
+
+### ⚙️ Environment & Setup
+
+The pipeline automatically:
+- Sets up **Python 3.12 environment**
+- Installs all project dependencies
+- Installs **Playwright browsers** for UI testing
+- Injects secure configuration using **GitHub Secrets**
+
+---
+
+### 📊 Test Reporting & Delivery
+
+- Test results are generated using **Allure**
+- Reports are:
+  - Automatically built after test execution
+  - Published to a live environment via **GitHub Pages**
+
+👉 This enables:
+- Continuous visibility of test results  
+- Easy sharing of reports through a public URL  
+
+---
+
+### 🌐 Continuous Delivery
+
+The pipeline includes a **CD step** that:
+- Deploys the latest Allure report on each run of the `main` branch
+- Keeps a continuously updated **live test reporting dashboard**
+
+---
+
+### 🎯 Outcome
+
+This CI/CD pipeline ensures:
+- Automated validation of application quality  
+- Fast feedback on code changes  
+- Centralized and accessible test reporting  
+- A scalable foundation for further automation enhancements  
 
 ---
 
