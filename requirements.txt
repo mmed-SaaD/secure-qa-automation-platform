@@ -8,6 +8,8 @@ pytest-xdist==3.8.0
 
 python-dotenv==1.0.1
 
+psycopg2-binary==2.9.9
+
 k6==1.1.0
 
 pandas==3.0.2
