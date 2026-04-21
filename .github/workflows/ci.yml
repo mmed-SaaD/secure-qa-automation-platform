@@ -86,8 +86,6 @@ jobs:
             pytest tests/api -v
           elif [ "${{ github.event.inputs.suite }}" = "ui" ]; then
             pytest tests/ui -v
-          elif [ "${{ github.event.inputs.suite }}" = "db" ]; then
-            pytest tests/db -v
           else
             pytest -v
           fi
@@ -95,3 +93,13 @@ jobs:
       - name: Run CI suite for push and pull request
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: pytest -m "not db and not ui" -v
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            allure-results
+            reports
+            screenshots
