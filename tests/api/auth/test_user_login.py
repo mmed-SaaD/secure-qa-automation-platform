@@ -6,8 +6,8 @@ import pytest, requests
 @pytest.mark.smoke
 def test_login_valid_credentials(API_BASE_URL, USERNAME_API, PASSWORD_API):
     payload = {
-        "username" : USERNAME_API,
-        "password" : PASSWORD_API
+        "username" : USERNAME_API.strip().strip('"'),
+        "password" : PASSWORD_API.strip().strip('"')
     }
     headers = {
         "Content-Type": "application/json"
@@ -24,8 +24,8 @@ def test_login_valid_credentials(API_BASE_URL, USERNAME_API, PASSWORD_API):
 @pytest.mark.smoke
 def test_valide_auth_protected_endpoint_access(API_BASE_URL, USERNAME_API, PASSWORD_API):
     payload = {
-        "username" : USERNAME_API,
-        "password" : PASSWORD_API
+        "username" : USERNAME_API.strip().strip('"'),
+        "password" : PASSWORD_API.strip().strip('"')
     }
     headers = {
         "Content-Type": "application/json"
