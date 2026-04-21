@@ -1,0 +1,1 @@
+INFO     test_api_cart:test_api_cart.py:39 Cart recovered with items !
