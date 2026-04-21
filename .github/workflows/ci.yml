@@ -29,7 +29,7 @@ on:
         required: true
         default: 'smoke'
 
-  jobs:
+jobs:
   tests:
     runs-on: ubuntu-latest
 
