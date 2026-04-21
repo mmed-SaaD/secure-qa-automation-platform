@@ -12,6 +12,8 @@ psycopg2-binary==2.9.9
 
 k6==1.1.0
 
+argon2-cffi==23.1.0
+
 pandas==3.0.2
 
 pytest-html==4.2.0
