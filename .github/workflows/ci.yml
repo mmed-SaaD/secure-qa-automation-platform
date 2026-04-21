@@ -33,7 +33,26 @@ jobs:
   tests:
     runs-on: ubuntu-22.04
 
+    environment: secure-qa-automation-platform-env
+    env:
+      # UI
+      BASE_URL: ${{ secrets.BASE_URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      LOCKEDUSER: ${{ secrets.LOCKEDUSER }}
+      PROBLEM_USER: ${{ secrets.PROBLEM_USER }}
+      FIRSTNAME: ${{ secrets.FIRSTNAME }}
+      LASTNAME: ${{ secrets.LASTNAME }}
+      ZIP: ${{ secrets.ZIP }}
+      PAYMENT_INFO: ${{ secrets.PAYMENT_INFO }}
+
+      # API
+      API_BASE_URL: ${{ secrets.API_BASE_URL }}
+      USERNAME_API: ${{ secrets.USERNAME_API }}
+      PASSWORD_API: ${{ secrets.PASSWORD_API }}
+
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -41,6 +60,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Debug env (safe)
+        run: |
+          echo "Username exists? ${{ secrets.USERNAME != '' }}"
 
       - name: Install dependencies
         run: |
