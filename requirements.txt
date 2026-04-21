@@ -13,6 +13,8 @@ pytest-xdist==3.8.0
 
 python-dotenv==1.0.1
 
+email-validator==2.1.0.post1
+
 psycopg2-binary==2.9.9
 
 k6==1.1.0
