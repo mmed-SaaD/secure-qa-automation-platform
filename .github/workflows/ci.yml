@@ -92,13 +92,14 @@ jobs:
 
       - name: Run CI suite for push and pull request
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        run: pytest -m "not db and not ui" -v
+        run: pytest -m "not db" -v
 
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-artifacts
+          if-no-files-found: ignore
           path: |
             allure-results
             reports
