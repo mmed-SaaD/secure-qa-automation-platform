@@ -94,13 +94,12 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: pytest -m "not db" -v
 
+      - name: Ensure artifact folders exist
+        run: mkdir -p ci-artifacts
+
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-artifacts
-          if-no-files-found: ignore
-          path: |
-            allure-results
-            reports
-            screenshots
+          name: upload artifacts
+          path: mkdir -p ci-artifacts
