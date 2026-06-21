@@ -34,11 +34,19 @@ def api_login_token_verification(API_BASE_URL, USERNAME_API, PASSWORD_API):
     headers = {
         "Content-Type": "application/json"
     }
+    print(f"API_BASE_URL: [{API_BASE_URL}]")
+    print(f"USERNAME_API length: {len(USERNAME_API)}")
+    print(f"PASSWORD_API length: {len(PASSWORD_API)}")
+
     response = requests.post(
-            f"{API_BASE_URL}/auth/login",
-            json=payload,
-            headers=headers
+        f"{API_BASE_URL}/auth/login",
+        json=payload,
+        headers=headers
     )
+
+    print("Status:", response.status_code)
+    print("Response:", response.text)
+
     assert response.status_code == 200, f"Something went wrong, response returned status code {response.status_code}"
 
     data = response.json()
