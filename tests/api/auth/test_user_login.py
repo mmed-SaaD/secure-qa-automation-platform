@@ -12,7 +12,11 @@ def test_login_valid_credentials(API_BASE_URL, USERNAME_API, PASSWORD_API):
     headers = {
         "Content-Type": "application/json"
     }
-    response = requests.post(f"{API_BASE_URL}/auth/login",  payload)
+    response = requests.post(
+        f"{API_BASE_URL}/auth/login",
+        json=payload,
+        headers=headers
+    )
     assert response.status_code == 200 , f"Something went wrong, response returned status code {response.status_code}"
 
     data = response.json()
@@ -30,7 +34,11 @@ def test_valide_auth_protected_endpoint_access(API_BASE_URL, USERNAME_API, PASSW
     headers = {
         "Content-Type": "application/json"
     }
-    response = requests.post(f"{API_BASE_URL}/auth/login",  payload)
+    response = requests.post(
+        f"{API_BASE_URL}/auth/login",
+        json=payload,
+        headers=headers
+    )
     assert response.status_code == 200
 
     data = response.json()

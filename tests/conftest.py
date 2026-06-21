@@ -27,11 +27,18 @@ load_dotenv(ENV_PATH)
 
 @pytest.fixture(scope="session")
 def api_login_token_verification(API_BASE_URL, USERNAME_API, PASSWORD_API):
-    credentials = {
-        "username" : USERNAME_API,
-        "password" : PASSWORD_API
+    payload = {
+        "username" : USERNAME_API.strip().strip('"'),
+        "password" : PASSWORD_API.strip().strip('"')
     }
-    response =  requests.post(f"{API_BASE_URL}/auth/login" , json = credentials)
+    headers = {
+        "Content-Type": "application/json"
+    }
+    response = requests.post(
+            f"{API_BASE_URL}/auth/login",
+            json=payload,
+            headers=headers
+    )
     assert response.status_code == 200, f"Something went wrong, response returned status code {response.status_code}"
 
     data = response.json()

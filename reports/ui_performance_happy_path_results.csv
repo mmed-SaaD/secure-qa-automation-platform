@@ -69,3 +69,13 @@ d9fcd596-8a8e-4d3f-85ca-1488abbe29eb,checkout_happy_path,3,overview_to_complete,
 39da6354-0691-4db9-90d9-1ef399aab1fc,checkout_happy_path,4,overview_to_complete,57.81,2026-06-21 17:56:29
 487fc0e9-f2d6-467a-baa5-98e0d3155710,checkout_happy_path,5,checkout_info_to_overview,132.79,2026-06-21 17:56:34
 c765cac8-eeab-4c48-8aab-d718dcb59944,checkout_happy_path,5,overview_to_complete,32.81,2026-06-21 17:56:34
+3695f074-92ef-4bce-ae2a-6032b02f4068,checkout_happy_path,1,checkout_info_to_overview,125.79,2026-06-21 18:00:49
+7826f131-6f54-4748-b703-fa6d542d191a,checkout_happy_path,1,overview_to_complete,37.86,2026-06-21 18:00:49
+ed6ee1bb-67d9-4bf9-9466-589d7a6fb454,checkout_happy_path,2,checkout_info_to_overview,116.93,2026-06-21 18:00:50
+c559d54c-d8fb-48fd-a170-84d47a80abc7,checkout_happy_path,2,overview_to_complete,28.48,2026-06-21 18:00:50
+d0b15ea8-c26d-4210-beb5-9ba468b3b32b,checkout_happy_path,3,checkout_info_to_overview,118.04,2026-06-21 18:00:52
+4b23fe17-5559-4b71-88c2-7891ab734d44,checkout_happy_path,3,overview_to_complete,37.46,2026-06-21 18:00:52
+11d4e687-a8ce-4c35-8a99-bfc75f05d632,checkout_happy_path,4,checkout_info_to_overview,128.53,2026-06-21 18:00:54
+cb8b51fb-2085-44ea-8c48-1ca26733ee51,checkout_happy_path,4,overview_to_complete,33.04,2026-06-21 18:00:54
+e39fc7ba-9069-4efa-88be-dbf6e575d893,checkout_happy_path,5,checkout_info_to_overview,129.91,2026-06-21 18:00:55
+4ffb5cac-1d96-4143-8868-f3a0d71c80b1,checkout_happy_path,5,overview_to_complete,35.46,2026-06-21 18:00:55
