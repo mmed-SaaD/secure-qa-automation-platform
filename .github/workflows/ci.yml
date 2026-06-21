@@ -52,6 +52,10 @@ jobs:
       PASSWORD_API: ${{ secrets.PASSWORD_API }}
 
     steps:
+      - name: Debug API credentials length
+        run: |
+          echo "USERNAME_API length: ${#USERNAME_API}"
+          echo "PASSWORD_API length: ${#PASSWORD_API}"
       - name: Checkout repository
         uses: actions/checkout@v4
 
