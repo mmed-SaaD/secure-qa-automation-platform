@@ -1,0 +1,5 @@
+API_BASE_URL: [https://dummyjson.com]
+USERNAME_API length: 6
+PASSWORD_API length: 16
+Status: 400
+Response: {"message":"Invalid credentials"}
