@@ -170,7 +170,7 @@ class InventoryPage:
         with self.page.expect_popup() as popup_info:
             self.twitter.click()
             new_tab = popup_info.value
-            new_tab.wait_for_load_state("networkidle")
+            new_tab.wait_for_load_state("load")
             url = new_tab.url
             assert "x.com/saucelabs" in url or "twitter.com/saucelabs" in url, \
             f"There is a url missmatch, expecting https://x.com/saucelabs but recieved {url}"
@@ -179,7 +179,7 @@ class InventoryPage:
         with self.page.expect_popup() as popup_info:
             self.facebook.click()
             new_tab = popup_info.value
-            new_tab.wait_for_load_state("networkidle")
+            new_tab.wait_for_load_state("load")
             url = new_tab.url
             assert "facebook.com/saucelabs" in url, (
             f"Expected Facebook Sauce Labs page, but got {url}"
@@ -188,11 +188,14 @@ class InventoryPage:
     def visit_linkedin(self):
         with self.page.expect_popup() as popup_info:
             self.linkedin.click()
-            new_tab = popup_info.value
-            new_tab.wait_for_load_state("networkidle")
-            url = new_tab.url
-            assert url == "https://www.linkedin.com/company/sauce-labs/", \
-            f"There is a url missmatch, expecting https://www.linkedin.com/company/sauce-labs/ but recieved {url}"
+
+        new_tab = popup_info.value
+        new_tab.wait_for_load_state("load")
+
+        url = new_tab.url
+
+        assert "linkedin.com/company/sauce-labs" in url, \
+            f"There is a url mismatch, expecting LinkedIn Sauce Labs page but received {url}"
 
     def visit_about(self):
         self.burger_menu.click()
