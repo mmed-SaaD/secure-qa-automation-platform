@@ -1,0 +1,5 @@
+API_BASE_URL: [https://dummyjson.com]
+USERNAME_API length: 6
+PASSWORD_API length: 10
+Status: 200
+Response: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJqYW1lc2QiLCJlbWFpbCI6ImphbWVzLmRhdmlzQHguZHVtbXlqc29uLmNvbSIsImZpcnN0TmFtZSI6IkphbWVzIiwibGFzdE5hbWUiOiJEYXZpcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2phbWVzZC8xMjgiLCJpYXQiOjE3ODIwNjI5MzMsImV4cCI6MTc4MjA2NjUzM30.hFPZUq6LnizY1WDhHYBn5LWVon3iekThgH0PKFajbLU","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJqYW1lc2QiLCJlbWFpbCI6ImphbWVzLmRhdmlzQHguZHVtbXlqc29uLmNvbSIsImZpcnN0TmFtZSI6IkphbWVzIiwibGFzdE5hbWUiOiJEYXZpcyIsImdlbmRlciI6Im1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2phbWVzZC8xMjgiLCJpYXQiOjE3ODIwNjI5MzMsImV4cCI6MTc4NDY1NDkzM30.JPU2NfYwNyTLT2PepvPz-S-eRVk9npS9fwuyc4O8Njg","id":4,"username":"jamesd","email":"james.davis@x.dummyjson.com","firstName":"James","lastName":"Davis","gender":"male","image":"https://dummyjson.com/icon/jamesd/128"}
