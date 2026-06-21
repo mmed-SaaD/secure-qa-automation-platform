@@ -156,7 +156,6 @@ def page(context, request):
     page = context.new_page()
     yield page
 
-    #get request.node.rep_call and if it does not exist return None
     failed = getattr(request.node, "rep_call", None) and request.node.rep_call.failed
     print(f"failed : {failed}")
 
@@ -171,37 +170,33 @@ def page(context, request):
     page.close()
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
-#item : the test itself
-#call : infos abt what is currently being executed (setup, call or teardown)
-
 def pytest_runtest_makereport(item,call):
-    #yield => to wait until pytest finishes running the test phase
     outcome = yield
     rep = outcome.get_result()
-    #building a dynamic name : rep_call, rep_setup, rep_teardown
     setattr(item, "rep_" + rep.when, rep)
+
+def clean_env_value(name: str) -> str:
+    value = os.getenv(name)
+
+    if value is None or value.strip() == "":
+        raise ValueError(f"{name} not found in environment")
+
+    return value.strip().strip('"').strip("'")
 
 
 @pytest.fixture(scope="session")
 def API_BASE_URL():
-    api_base_url = os.getenv("API_BASE_URL")
-    if not api_base_url:
-        raise ValueError("No API_BASE_URL was found in .env")
-    return api_base_url
+    return clean_env_value("API_BASE_URL").rstrip("/")
+
 
 @pytest.fixture(scope="session")
 def USERNAME_API():
-    username = os.getenv("USERNAME_API")
-    if not username:
-        raise ValueError("No USERNAME_API found in .env")
-    return username
+    return clean_env_value("USERNAME_API")
+
 
 @pytest.fixture(scope="session")
 def PASSWORD_API():
-    password = os.getenv("PASSWORD_API")
-    if not password:
-        raise ValueError("No PASSWORD_API found in .env")
-    return password
+    return clean_env_value("PASSWORD_API")
 
 @pytest.fixture(scope="session")
 def db_connection():
