@@ -82,7 +82,7 @@ jobs:
 
       - name: Run scheduled smoke tests
         if: github.event_name == 'schedule'
-        run: pytest -m smoke -v --alluredir=allure-results
+        run: pytest -m "not db" -v --alluredir=allure-results
 
       - name: Run manual selected suite
         if: github.event_name == 'workflow_dispatch'
