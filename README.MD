@@ -32,16 +32,18 @@ This platform covers multiple testing layers:
 
 ## 🧱 Architecture
 
-
+```
 project/
 ├── src/ # Core logic, helpers, and reusable components
+├── artifacts/
+| ├── documents/
 ├── tests/
 │ ├── api/
 │ ├── db/
 │ ├── ui/
 │ ├── performance/
 │ ├── security/
-
+```
 
 The project follows a layered structure:
 
