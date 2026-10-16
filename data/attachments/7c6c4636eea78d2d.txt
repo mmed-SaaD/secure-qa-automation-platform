@@ -1,1 +1,0 @@
-2026-10-15 10:59:03 | INFO     | test_api_cart | Cart recovered with items !
